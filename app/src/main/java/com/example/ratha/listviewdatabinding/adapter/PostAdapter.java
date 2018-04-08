@@ -25,6 +25,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public PostAdapter(Context context, List<PostViewModel> list){
         this.context=context;this.list=list;
     }
+
+    public void setData(List<PostViewModel> list){
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(context);

@@ -30,11 +30,12 @@ public class instagramActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter=new PostAdapter(this,getData());
         recyclerView.setAdapter(adapter);
-
+        adapter.setData(getData());
     }
 
     private List<PostViewModel> getData(){
         PostViewModel postViewModel=new PostViewModel();
-        return postViewModel.getPostViewModels();
+        return postViewModel.getPostViewModels(this);
     }
+
 }

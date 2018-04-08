@@ -1,5 +1,11 @@
 package com.example.ratha.listviewdatabinding.viewmodel;
 
+import android.content.Context;
+import android.databinding.BindingAdapter;
+import android.databinding.ObservableField;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import com.example.ratha.listviewdatabinding.R;
 import com.example.ratha.listviewdatabinding.entity.Post;
 
@@ -16,24 +22,35 @@ public class PostViewModel {
     private String content;
     private String like;
     private String location;
-    private int profile;
-    private int photo;
+    private ObservableField<Drawable> profile=new ObservableField<>();
+    private ObservableField<Drawable> photo=new ObservableField<>();
 
+    private Context context;
     List<PostViewModel> postViewModels;
 
     public PostViewModel() {}
 
-    public PostViewModel(Post post){
+    public PostViewModel(Context context,Post post){
+        this.context=context;
         id=post.id;
         owner=post.owner;
         content=post.content;
         like=post.like;
         location=post.location;
-        profile=post.profile;
-        photo=post.photo;
+        profile.set(context.getResources().getDrawable(post.profile));
+        photo.set(context.getResources().getDrawable(post.photo));
+
     }
 
-    public List<PostViewModel> getPostViewModels(){
+    /*@BindingAdapter({"bind:imageProfile"})
+    public static void loadImageProfile(ImageView view ,int resource){
+        if(resource!=0)
+        view.setImageResource(resource);
+        else
+            view.setImageResource(R.drawable.alliance_central_park_fountain);
+    }*/
+
+    public List<PostViewModel> getPostViewModels(Context context){
         List<PostViewModel> list=new ArrayList<>();
         for(int i=0;i<50;i++){
 
@@ -45,7 +62,7 @@ public class PostViewModel {
                     R.drawable.profile,
                     R.drawable.alliance_central_park_fountain
             );
-            list.add(new PostViewModel(post));
+            list.add(new PostViewModel(context,post));
         }
 
         return list;
@@ -91,19 +108,19 @@ public class PostViewModel {
         this.location = location;
     }
 
-    public int getProfile() {
+    public ObservableField<Drawable> getProfile() {
         return profile;
     }
 
-    public void setProfile(int profile) {
+    public void setProfile(ObservableField profile) {
         this.profile = profile;
     }
 
-    public int getPhoto() {
+    public ObservableField<Drawable> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(int photo) {
+    public void setPhoto(ObservableField photo) {
         this.photo = photo;
     }
 }
